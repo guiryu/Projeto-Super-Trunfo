@@ -1,4 +1,5 @@
 import random
+import time
 
 def jogadores():
     while True: 
@@ -20,9 +21,18 @@ def baralho1():
     carta6 = ["McLaren P1", 330, 916, 2013]
     baralho = [carta1, carta2, carta3, carta4, carta5, carta6]
     return baralho
+
+def imprimir_baralho(mao1, mao2, monteEmpate):
+        print("="*30)
+        print(mao1)
+        print("="*30)
+        print(mao2)
+        print("="*30)
+        print(f"Monte de empate: {monteEmpate}")
+
+
+
 def vencedor(j1, j2, n, ctopo1, ctopo2, mao1, mao2, monte_empate):
-
-
     if ctopo1[n] > ctopo2[n]:
         print("="*30)
         print(f"{j1} venceu a rodada!")
@@ -56,18 +66,27 @@ def vencedor(j1, j2, n, ctopo1, ctopo2, mao1, mao2, monte_empate):
     return mao1, mao2, monte_empate
 
 
-def singleplayer():
+def singleplayer():  #TODO Arrumar os prints baguncados (Colocar time.sleep ajuda)
     j1 = "Jogador"
     j2 = "Computador"
-    baralho = baralho1()
+    baralho = baralho1() #chama baralho e embaralha
     random.shuffle(baralho)
     maojog = baralho[:3]
     maocomp = baralho[3:]
     monte_empate = []
+
     
     while maojog != [] and maocomp !=[]:
-            #TODO Alternar as rodadas de quem seleciona o atributo? nao sei se precisa isso
-        while True:
+        
+        ctopo_jog = maojog[0]
+        ctopo_comp = maocomp[0]
+
+        print("Rodada do JOGADOR") #RODADA JOGADOR
+        print("^"*20)
+        print(f"Jogador: {ctopo_jog}")
+        print("~"*20)
+
+        while True:             #Escolha de atributo: jogador
             print("="*30)
             atributo = int(input("Selecione o atributo (1 a 3): "))
 
@@ -75,33 +94,52 @@ def singleplayer():
                 break
             else:
                 print("Valor inválido!", end="")
-    
-        ctopo_jog = maojog[0]
-        ctopo_comp = maocomp[0]
 
         print("="*30)
-        print(f"Jogador: {ctopo_jog}")
-        print(maojog)
-        print("="*30)
-        print(f"Computador: {ctopo_comp}")
-        print(maocomp)
+        print(f"Carta do computador: {ctopo_comp}")
 
         maojog, maocomp, monte_empate = vencedor(j1, j2, atributo, ctopo_jog, ctopo_comp, maojog, maocomp, monte_empate)
-        
 
-    if maojog == []:
+        if maojog == [] or maocomp == []:  #Finaliza caso acabe por aqui
+            break
+
+        ctopo_jog = maojog[0]
+        ctopo_comp = maocomp[0]
+        
+        imprimir_baralho(maojog, maocomp, monte_empate) #TODO Não sei se pode deixar isso
+        
+        time.sleep(3)
+
+
+        print("="*30)   #RODADA COMPUTADOR
+        print("Rodada do COMPUTADOR")
+        print("^"*20)
+        print(f"Carta do computador: {ctopo_comp}")
+        print("~"*20)
+        print(f"Sua carta: {ctopo_jog}")
+
+        print("="*30)
+        
+        atributo = random.randint(1, 3)   #Computador escolhe atributo
+        print(f"O computador escolheu o atributo {atributo}")
+
+
+        maojog, maocomp, monte_empate = vencedor(j1, j2, atributo, ctopo_jog, ctopo_comp, maojog, maocomp, monte_empate)
+
+        imprimir_baralho(maojog, maocomp, monte_empate) #TODO Não sei se pode deixar isso
+        
+        time.sleep(3)
+
+    if maojog == []:  #Declara vencedor final
         print("="*30)
         print("O computador venceu o jogo!")
     elif maocomp == []:
         print("="*30)
         print("Parabéns! O jogador venceu o jogo!")
-    else:
-        print("="*30)
-        print("O jogo empatou!")
        
 
 
-def dualplayer():
+def dualplayer():  #TODO Multiplayer
     baralho = baralho1()
     random.shuffle(baralho)
     maoj1 = baralho[0, 1, 2]
