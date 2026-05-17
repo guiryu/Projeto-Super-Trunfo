@@ -13,7 +13,7 @@ def jogadores():
 
 def baralho1():
     # Cartas exemplo: nome, vmax, cv, ano
-    carta1 = ["Ferrari F40", 360, 963, 2013]
+    carta1 = ["Ferrari LaFerrari", 360, 963, 2013]
     carta2 = ["Lamborghini SVJ", 350, 770, 2018]
     carta3 = ["Porsche 911", 296, 525, 2026]
     carta4 = ["Audi R8", 330, 610, 2021]
@@ -35,7 +35,7 @@ def imprimir_baralho(mao1, mao2, monteEmpate):
 def vencedor(j1, j2, n, ctopo1, ctopo2, mao1, mao2, monte_empate):
     if ctopo1[n] > ctopo2[n]:
         print("="*30)
-        print(f"{j1} venceu a rodada!")
+        print(f">>{j1} venceu a rodada!<<")
         mao2.remove(ctopo2)
         mao1.append(ctopo2)
         if monte_empate != []:
@@ -47,7 +47,7 @@ def vencedor(j1, j2, n, ctopo1, ctopo2, mao1, mao2, monte_empate):
 
     elif ctopo1[n] < ctopo2[n]:
         print("="*30)
-        print(f"{j2} venceu a rodada!")
+        print(f">>{j2} venceu a rodada!<<")
         mao1.remove(ctopo1)
         mao2.append(ctopo1)
         if monte_empate != []:
@@ -57,7 +57,7 @@ def vencedor(j1, j2, n, ctopo1, ctopo2, mao1, mao2, monte_empate):
         mao2.remove(ctopo2)
     else:
         print("="*30)
-        print("Empate!")
+        print(">>Empate!<<")
         monte_empate.append(ctopo1)
         monte_empate.append(ctopo2)
         mao1.remove(ctopo1)
@@ -81,10 +81,13 @@ def singleplayer():  #TODO Arrumar os prints baguncados (Colocar time.sleep ajud
         ctopo_jog = maojog[0]
         ctopo_comp = maocomp[0]
 
-        print("Rodada do JOGADOR") #RODADA JOGADOR
-        print("^"*20)
-        print(f"Jogador: {ctopo_jog}")
-        print("~"*20)
+        print("----Rodada do JOGADOR----") #RODADA JOGADOR
+
+        print("Carta do jogador 1: ")
+        print(f"Nome: {ctopo_jog[0]}")
+        print(f"1 - Velocidade: {ctopo_jog[1]}")
+        print(f"2 - Cavalos: {ctopo_jog[2]}")
+        print(f"3 - Ano: {ctopo_jog[3]}")
 
         while True:             #Escolha de atributo: jogador
             print("="*30)
@@ -93,12 +96,19 @@ def singleplayer():  #TODO Arrumar os prints baguncados (Colocar time.sleep ajud
             if atributo >= 1 and atributo <=3:
                 break
             else:
-                print("Valor inválido!", end="")
+                print("Valor inválido!")
 
         print("="*30)
-        print(f"Carta do computador: {ctopo_comp}")
+        print("Carta do computador: ")
+        print(f"Nome: {ctopo_comp[0]}")
+        print(f"1 - Velocidade: {ctopo_comp[1]}")
+        print(f"2 - Cavalos: {ctopo_comp[2]}")
+        print(f"3 - Ano: {ctopo_comp[3]}")
 
         maojog, maocomp, monte_empate = vencedor(j1, j2, atributo, ctopo_jog, ctopo_comp, maojog, maocomp, monte_empate)
+
+        print(f"Cartas Jogador: {len(maojog)}")
+        print(f"Cartas Computador: {len(maocomp)}")
 
         if maojog == [] or maocomp == []:  #Finaliza caso acabe por aqui
             break
@@ -106,17 +116,25 @@ def singleplayer():  #TODO Arrumar os prints baguncados (Colocar time.sleep ajud
         ctopo_jog = maojog[0]
         ctopo_comp = maocomp[0]
         
-        imprimir_baralho(maojog, maocomp, monte_empate) #TODO Não sei se pode deixar isso
         
-        time.sleep(3)
+        time.sleep(10)
 
 
         print("="*30)   #RODADA COMPUTADOR
-        print("Rodada do COMPUTADOR")
-        print("^"*20)
-        print(f"Carta do computador: {ctopo_comp}")
-        print("~"*20)
-        print(f"Sua carta: {ctopo_jog}")
+        print("----Rodada do COMPUTADOR----")
+        print("Carta do computador: ")
+        print(f"Nome: {ctopo_comp[0]}")
+        print(f"1 - Velocidade: {ctopo_comp[1]}")
+        print(f"2 - Cavalos: {ctopo_comp[2]}")
+        print(f"3 - Ano: {ctopo_comp[3]}")
+    
+
+        print("="*30)
+        print("Carta do jogador")
+        print(f"Nome: {ctopo_jog[0]}")
+        print(f"1 - Velocidade: {ctopo_jog[1]}")
+        print(f"2 - Cavalos: {ctopo_jog[2]}")
+        print(f"3 - Ano: {ctopo_jog[3]}")
 
         print("="*30)
         
@@ -125,10 +143,11 @@ def singleplayer():  #TODO Arrumar os prints baguncados (Colocar time.sleep ajud
 
 
         maojog, maocomp, monte_empate = vencedor(j1, j2, atributo, ctopo_jog, ctopo_comp, maojog, maocomp, monte_empate)
+        print(f"Cartas Jogador: {len(maojog)}")
+        print(f"Cartas Computador: {len(maocomp)}")
 
-        imprimir_baralho(maojog, maocomp, monte_empate) #TODO Não sei se pode deixar isso
         
-        time.sleep(3)
+        time.sleep(10)
 
     if maojog == []:  #Declara vencedor final
         print("="*30)
@@ -136,15 +155,107 @@ def singleplayer():  #TODO Arrumar os prints baguncados (Colocar time.sleep ajud
     elif maocomp == []:
         print("="*30)
         print("Parabéns! O jogador venceu o jogo!")
+
        
 
 
 def dualplayer():  #TODO Multiplayer
+    j1 = "jogador 1"
+    j2 = "jogador 2 "
+
     baralho = baralho1()
+
     random.shuffle(baralho)
-    maoj1 = baralho[0, 1, 2]
-    maoj2 = baralho[3, 4, 5]
-    
+
+
+    maoj1 = baralho [:3]
+
+    maoj2 = baralho [3:]
+
+    monte_empate = []
+
+    while maoj1 !=  [] and maoj2 != []:
+
+        ctopo_j1 = maoj1[0]
+        ctopo_j2 = maoj2[0]
+
+
+        print("----Rodada do JOGADOR 1----")
+        print("Carta do jogador 1: ")
+        print(f"Nome: {ctopo_j1[0]}")
+        print(f"1 - Velocidade: {ctopo_j1[1]}")
+        print(f"2 - Cavalos: {ctopo_j1[2]}")
+        print(f"3 - Ano: {ctopo_j1[3]}")
+        print("=" * 30)
+
+        while True:
+
+            atributo = int(input("Jogador 1, escolha o atributo de 1 a 3: "))
+
+            if atributo >= 1 and atributo <= 3:
+                break
+        
+            else:
+                print("Valor invalido")
+
+
+        print("=" * 30)
+        print("Carta do jogador 2: ")
+        print(f"Nome: {ctopo_j2[0]}")
+        print(f"1 - Velocidade: {ctopo_j2[1]}")
+        print(f"2 - Cavalos: {ctopo_j2[2]}")
+        print(f"3 - Ano: {ctopo_j2[3]}")
+
+        maoj1, maoj2, monte_empate = vencedor(j1, j2, atributo, ctopo_j1, ctopo_j2, maoj1, maoj2, monte_empate)
+
+        print("="*30)
+        print(f"Cartas Jogador 1: {len(maoj1)}")
+        print(f"Cartas Jogador 2: {len(maoj2)}")
+        print("="*30)
+        time.sleep(10)
+
+        if maoj1 == [] or maoj2 == []:  #Finaliza caso acabe por aqui
+            break
+        ctopo_j1 = maoj1[0]
+        ctopo_j2 = maoj2[0]
+        
+        print("----Rodada do JOGADOR 2----")
+        print("Carta do jogador 2: ")
+        print(f"Nome: {ctopo_j2[0]}")
+        print(f"1 - Velocidade: {ctopo_j2[1]}")
+        print(f"2 - Cavalos: {ctopo_j2[2]}")
+        print(f"3 - Ano: {ctopo_j2[3]}")
+        print("=" * 30)
+        
+        while True:
+
+            atributo = int(input("Jogador 2, escolha o atributo de 1 a 3: "))
+
+            if atributo >= 1 and atributo <= 3:
+                break
+        
+            else:
+                print("Valor invalido")
+
+        print("="*30)
+        print("Carta do jogador 1: ")
+        print(f"Nome: {ctopo_j1[0]}")
+        print(f"1 - Velocidade: {ctopo_j1[1]}")
+        print(f"2 - Cavalos: {ctopo_j1[2]}")
+        print(f"3 - Ano: {ctopo_j1[3]}")
+
+        maoj1, maoj2, monte_empate = vencedor(j1, j2, atributo, ctopo_j1, ctopo_j2, maoj1, maoj2, monte_empate)
+
+        print("="*30)
+        print(f"Cartas Jogador 1: {len(maoj1)}")
+        print(f"Cartas Jogador 2: {len(maoj2)}")
+        print("="*30)
+        time.sleep(10)
+
+    if maoj1 == []:
+        print("Jogador 2 venceu o jogo!")
+    else:
+        print("Jogador 1 venceu o jogo!")
 
 def main():
     tipo = jogadores()
@@ -152,7 +263,7 @@ def main():
         singleplayer()
     else:
         dualplayer()
-
+    print("--FIM DO PROGRAMA--")
 
 main()
 
