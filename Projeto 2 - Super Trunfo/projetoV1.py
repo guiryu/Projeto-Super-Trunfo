@@ -1,3 +1,8 @@
+#Feito por Guilherme Ryu Ojima - 10769513
+          #Ana Paula Paes Landim Ferro - 10769791
+
+
+
 import random
 import time
 
